@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+    <title>GeoCommons Javascript API Simple Example</title>
+    <script src="../src/f1_maker_map.js" type="text/javascript"></script>
+
+    <style type="text/css" media="screen">
+     #maker_map {
+        height: 400px;
+        width: 700px;
+     }
+
+     #maker_map {visibility:hidden}
+
+     body {
+       font-family: "georgia";
+       font-size: small;
+     }
+     .left {
+      width: 700px;
+      height: 400px;
+      float: left;
+     }
+     .right {
+       width: 200px;
+       float: left;
+     }
+    </style>
+
+    <script type='text/javascript'>
+      Maker.maker_host='http://maker.recovery.geocommons.com';
+      Maker.finder_host='http://finder.recovery.geocommons.com';
+      Maker.core_host='http://recovery.geocommons.com';
+    </script>
+  </head>
+
+  <body>
+    <div id='header'>
+        <h1>GeoCommons Javascript API Simple Example</h1>
+    </div>
+    
+
+    <div class="atlas left" id="atlas_4" style="float:left"><div id='maker_map'>
+      <div class='loading'>
+        Loading...
+      </div>
+    </div></div>
+
+    <div class="right" style="float:left; width:200px">
+    <h2>Demo Functions</h2>
+    <ul>
+      <li><a href="javascript:Maker.setBounds({'north':51.9,'south':-4.3,'east':52.25,'west':-3.75});">Set Bounds</a></li>
+      <li><a href="javascript:b=Maker.getBounds();alert(b.north+','+b.south+','+b.east+','+b.west);">Get Bounds</a> </li>
+      <li><a href="javascript:Maker.setZoom( Maker.getZoom()-1 );">Zoom Out</a></li>
+      <li><a href="javascript:Maker.setZoom( Maker.getZoom()+1 );">Zoom In</a></li>
+      <li><a href="javascript:alert('zoom is ' + Maker.getZoom());">Get Zoom</a></li>
+      <li><a href="javascript:c=Maker.getCenter();alert(c.lat + ',' + c.lon);">Get Center</a></li>
+      <li><a href="javascript:Maker.setCenter({'lat': 52, 'lon': 1});">Set Center</a></li>
+      <li><a href="javascript:Maker.setCenter({'lat':38.404196,'lon':-123.008194}, {pan: true});">Pan to Center</a></li>
+      <li><a href="javascript:Maker.addControls({zoom:true, layers:true});">Show Zoom and Layer Controls</a></li>
+      <li><a href="javascript:Maker.addControls({});">Remove Controls</a></li>
+      <li><a href="javascript:Maker.addControls({legend:true});">Show Legend</a></li>
+      <li><a href="javascript:Maker.resizeTo('100px','200px');">Resize</a></li>
+    </ul>
+    </div>
+    
+    <script charset='utf-8' type='text/javascript'>
+      
+      Maker.load_map('maker_map', 5, {
+        afterFinish : function(){}
+      })
+      
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+    <title>GeoCommons Javascript API Example Dashboard</title>
+    <script src="../lib/prototype.js" type="text/javascript"></script>
+    <script src="../lib/effects.js" type="text/javascript"></script>
+    <script src="../src/f1_maker_map.js" type="text/javascript"></script>
+    <script src="../src/f1_outlet.js" type="text/javascript"></script>
+
+    <link href="news.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="../css/f1_outlet.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="news.js" type="text/javascript"></script>
+
+    <script type='text/javascript'>
+      Maker.maker_host =  'http://maker.news.geocommons.com'
+      Maker.finder_host = 'http://finder.news.geocommons.com'
+      Maker.core_host =   'http://core.news.geocommons.com'
+    </script>
+  </head>
+
+  <body>
+    <div id='header'>
+      <div class='header'>
+        <div id='logo'>
+          GeoCommons Javascript API Example Dashboard
+        </div>
+      </div>
+    </div><!-- /#header -->
+    
+    <div id='content'>
+      <div class='content'>
+        
+        <div class='c_atlases a_show' id='page'>
+          <div class='page'>
+            <div class="atlas" id="atlas_4"><div id='maker_map' style='height:600px'>
+              <div class='loading'>
+                Loading...
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id='side'>
+          <div class='side'>
+            <div class='panel' id='panel_welcome'>
+              <label><a href="#" class="expand expand_welcome">Swine Flu Tracker</a></label>
+              <div class='short'>
+                <p>This dashboard was made for the purpose of showing details about the spread of the swine flu throughout the world. data sets will be updated from a variety of sources regularly.</p>
+
+              </div>
+              <div class='long' style='display:none'>
+                <p>This dashboard was made for the purpose of showing details about the spread of the swine flu throughout the world. data sets will be updated from a variety of sources regularly.</p>
+                <a href="#" class="expand expand_explore">&laquo; less</a>
+              </div>
+            </div>
+            <div id='atlas_panels'></div>
+          </div>
+        </div><!-- /#side -->
+        
+      </div>
+    </div><!-- /#content -->
+    
+    <div id='footer'>
+      <div class='footer fl_r'>
+        <div class='l'>Powered by <a href="http://fortiusone.com/" title="FortiusOne Visual Intelligence Solutions | Visual Intelligence, Smarter Decisions">FortiusOne</a></div>
+
+        <div class='r'>
+          <!--[I'll put something here someday]> 
+          <![endif]-->
+        </div>
+      </div>
+    </div><!-- /#footer -->
+    
+    <script charset='utf-8' type='text/javascript'>
+      News.create_panel('atlas_panels', 
+            {"map_list": {
+              "title": "Swine Flu", 
+              "sort_order": null, 
+              "maker_tag": "swine", 
+              "id": 12, 
+              "description": null, 
+              "maker_user": "", 
+            }})
+            
+      News.create_panel('atlas_panels', 
+            {"map_list": {
+              "title": "Swine Flu Diffusion ", 
+              "sort_order": null, "maker_tag": 
+              "diff", "atlas_id": 4, "id": 13, 
+              "description": null, 
+              "maker_user": "", 
+            }})
+      Accordion.initialize()
+      
+    </script>
+  </body>
+
+</html>

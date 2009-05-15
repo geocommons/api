@@ -1,0 +1,138 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, small,  strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline;}
+:focus {outline: 0;}
+ol, ul {list-style: none;}
+table {border-collapse: separate; border-spacing: 0;}
+caption, th, td { text-align: left; font-weight: normal;}
+
+/* __________________________( Typography )_ */
+body {
+  font-size: 12px;
+  font-family: "Lucida Grande",Verdana, sans-serif;
+}
+em {font-style: italic;}
+strong {font-weight: bold}
+.weak {color: #999}
+.block {display: block}
+a img {border: none;}
+.roll, .submit {
+  display: block; text-indent: -500em;
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: top left !important;
+  text-align: left;
+}
+.roll:hover, .submit:hover {
+  background-position: bottom left !important;
+}
+td {vertical-align: top}
+.whisper {color: #aaa}
+.paragraphs p, p.paragraphs {padding-bottom: 20px;}
+.paragraphs ul {list-style-type: disc}
+.paragraphs li {margin: 0.5em 0 0.5em 1em;}
+.clear {clear:both}
+.float_right {float: right;}
+.invisible {visibility: hidden;}
+h2 small {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+h1 small {
+    font-size: 14px;
+    font-weight: bold;
+    color: #999;
+}
+.loading {
+  position: absolute;
+  border: 1px solid #eee;
+  padding: 20px;
+  width: 300px;
+  margin: 15px 35px;
+  font-weight: bold;
+  color: #999;
+}
+
+/* __________________________( Patterns )_ */
+.fl_r {overflow: auto; height: 1%;}  /* float left/right */
+.fl_r .l { float: left; display: inline;}
+.fl_r .r { float: right; display: inline; width: 800px;}
+
+.hoverlinks a:hover {text-decoration: underline;}
+
+
+/* __________________________( Layout ) ___ */
+#content {
+  position: relative;
+}
+#content #page {
+   width: 100%;
+}
+#content .page {
+  margin: 0 300px 0 0;
+}
+#side {
+  position: absolute;
+  width: 300px;
+  top: 0; right: 0;
+}
+.side {
+  margin: 15px 25px;
+}
+
+.centered_content {
+  width: 828px;
+  margin: 0 auto;
+}
+
+
+/* __________________________( Header ) ___ */
+#header {
+  background: #1a365f;
+  height: 49px;
+}
+
+#header #logo {
+  font-size: 16px;
+  padding: 13px 0 0 22px;
+  color: #DEE9FD;
+}
+
+/* __________________________( Footer ) ___ */
+#footer {
+/*  background: #e1e1e1;*/
+border-top: 2px solid #e1e1e1;
+  color: #666;
+}
+.footer {
+  font-size: 10px;
+  height: 10px;
+  padding: 5px 5px;
+}
+#footer a {color: #333;}
+
+/* __________________________( panel ) ___ */
+.panel {
+  margin: 0 0 10px 0;
+}
+.panel label a {
+  display: block;
+  background: #b8ddff;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  padding: 4px 10px;
+  margin:  0 0 4px 0;
+}
+.panel label a:hover {
+  background: #93c5f3;
+}
+.panel p {
+  margin: 0 0 0.5em 0;
+}
+
+
+/* __________________________( side ) ___ */
+#panel_explore label a {background: #dfffb8}
+#panel_explore label a:hover {background: #c8f097}
+

@@ -1,8 +1,15 @@
 // Maker public facing javascript API.
-// version: 0.3a
+// version: 0.4a
 
 var Maker = {
-  version: "0.3a",
+  version: "0.4a",
+  map: {},
+  
+  load_map: function(dom_id, map_id, options) {
+    Maker._check_hosts()
+    Maker.map[dom_id] = new MakerMap(dom_id, map_id, arguments[2])
+    return Maker.map[dom_id] 
+  },
   
   find_maps: function(maker_tag, maker_user, callback) {
     Maker._check_hosts()
@@ -15,217 +22,175 @@ var Maker = {
     FlashMap.jsonp(Maker.maker_host + "/searches.json", callback, "query="+encodeURIComponent(q))
   },
   
-  load_map: function(dom_id, map_id, options) {  
-    Maker._check_hosts()
-    FlashMap.load_map(dom_id, map_id, arguments[2])  
-  },
-  resize_when_ready: function() { FlashMap.resize_when_ready() },
-  resize_map_to_fit: function() { FlashMap.resize_map_to_fit() },
-  
   _hostNotDefinedError: {
     name: 'HostNotDefinedError',
     message: 'Please specify Maker.maker_host, Maker.finder_host and Maker.core_host before proceeding.'
   },
   _check_hosts: function() {
     if (!this.maker_host) throw(Maker._hostNotDefinedError);
-  },
-  
-  addControls: function( args ) {
-       var map = FlashMap.map
-       map.showControl("Zoom", args.zoom || false);
-       map.showControl("Layers", args.layers || false);
-       map.showControl("Styles", args.styles || false); 
-       map.showControl("Basemap", args.map_type || false);
-       map.showControl("Legend", args.legend || false, "open"); 
-       // showControl("Legend", true, "close"); 
-   },
-
-   addSmallControls: function() {
-       var map = FlashMap.map
-       showControl("Zoom", args.zoom);
-       showControl("Legend", args.legend, "open"); 
-   },
-
-   addLargeControls: function() {
-       var map = FlashMap.map
-       showControl("Zoom", args.zoom);
-       showControl("Layers", args.layers);
-       showControl("Legend", args.legend, "open"); 
-   },
-
-   addMapTypeControls: function() {
-       var map = FlashMap.map
-
-       // TODO: Add provider code
-   },
-
-   dragging: function(on) {
-       var map = FlashMap.map
-
-       // TODO: Add provider code
-   },
-
-   setCenterAndZoom: function(point, zoom) { 
-       var map = FlashMap.map
-       map.setCenterZoom(point.lat, point.lon,zoom);
-   },
-
-   getCenter: function() {
-       var map = FlashMap.map
-       var point = map.getCenterZoom()[0];
-       return point;
-   },
-
-   setCenter: function(point, options) {
-       var map = FlashMap.map
-       map.setCenter(point.lat, point.lon);            
-   },
-
-   setZoom: function(zoom) {
-       var map = FlashMap.map
-       map.setZoom(zoom);
-   },
-
-   getZoom: function() {
-       var map = FlashMap.map
-       return map.getZoom();
-   },
-
-   getZoomLevelForBoundingBox: function( bbox ) {
-       var map = FlashMap.map
-       // NE and SW points from the bounding box.
-       var ne = bbox.getNorthEast();
-       var sw = bbox.getSouthWest();
-       var zoom;
-
-       // TODO: Add provider code
-
-       return zoom;
-   },
-
-   setMapType: function(type) {
-       var map = FlashMap.map
-       switch(type) {
-           case mxn.Mapstraction.ROAD:
-           map.setMapProvider("OpenStreetMap (road)");
-           break;
-           case mxn.Mapstraction.SATELLITE:
-           map.setMapProvider("BlueMarble");
-           break;
-           case mxn.Mapstraction.HYBRID:
-           map.setMapProvider("Google Hybrid");
-           break;
-           default:
-           map.setMapProvider(type);
-       }	 
-   },
-
-   getMapType: function() {
-       var map = FlashMap.map
-       switch(map.getMapProvider) {
-           case "OpenStreetMap (Road)":
-               retu
-
-       }
-       // TODO: Add provider code
-
-       //return mxn.Mapstraction.ROAD;
-       //return mxn.Mapstraction.SATELLITE;
-       //return mxn.Mapstraction.HYBRID;
-
-   },
-
-   getBounds: function () {
-       var map = FlashMap.map
-       return map.getExtent();
-   },
-
-   setBounds: function(bounds){
-       var map = FlashMap.map;
-       map.setExtent(bounds.north, bounds.south, bounds.east, bounds.west);
-       // map.setExtent(51.9,52.25,-4.3,-3.75)
-       //map.setExtent(n,s,e,w);
-   },
-
-   addImageOverlay: function(id, src, opacity, west, south, east, north, oContext) {
-       var map = FlashMap.map
-
-       // TODO: Add provider code
-   },
-
-   addOverlay: function(url, autoCenterAndZoom) {
-       var map = FlashMap.map
-       var me = this;
-       Maker.load_map(this.element.id, url);
-       setTimeout(function() { me.maps[me.api] = swfobject.getObjectById(FlashMap.dom_id);}, 500);
-   },
-
-   addTileLayer: function(tile_url, opacity, copyright_text, min_zoom, max_zoom) {
-       var map = FlashMap.map
-
-       // TODO: Add provider code
-   },
-
-   toggleTileLayer: function(tile_url) {
-       var map = FlashMap.map
-
-       // TODO: Add provider code
-   },
-
-   getPixelRatio: function() {
-       var map = FlashMap.map
-
-       // TODO: Add provider code	
-   },
-
-   mousePosition: function(element) {
-       var map = FlashMap.map
-
-       // TODO: Add provider code	
-   }
+  }
   
 }
 
 
-// Internal API. Use of these methods is strongly discouraged.
+var MakerMap = function(dom_id, map_id, options) {
+  var options = Object.f1_extend({
+    onLoaded: { },
+  }, arguments[2] || { });
+  this.options = options;
+  this.dom_id = dom_id
+  this.map_id = map_id
+  this._queue()
+  this._load()
+}
+
+// Add this instance to the Maker.map hash
+MakerMap.prototype._queue = function() {
+  Maker.map[this.dom_id] = this
+}
+
+// Load this instance by telling FlashMap to do it's thing.
+// The 3rd argument is a callback executed by Flash once it has loaded.
+MakerMap.prototype._load = function() {
+  FlashMap.load_map(this.dom_id, this.map_id, "Maker.map."+this.dom_id+"._onLoaded()")
+}
+
+// Our internal onloaded function is called first. The onload callback specified in this MakerMap's
+// options is called next.
+MakerMap.prototype._onLoaded = function() {
+  this.map = f1_swfobject21.getObjectById(this.dom_id);
+  if (typeof this.options.onLoaded == "function") this.options.onLoaded(this)
+}
+
+MakerMap.prototype.addControls = function( args ) {
+    this.map.showControl("Zoom", args.zoom || false);
+    this.map.showControl("Layers", args.layers || false);
+    this.map.showControl("Styles", args.styles || false); 
+    this.map.showControl("Basemap", args.map_type || false);
+    this.map.showControl("Legend", args.legend || false, "open"); 
+    // showControl("Legend", true, "close"); 
+}
+
+MakerMap.prototype.addSmallControls = function() {
+    this.map.showControl("Zoom", args.zoom);
+    this.map.showControl("Legend", args.legend, "open"); 
+}
+
+MakerMap.prototype.addLargeControls = function() {
+    this.map.showControl("Zoom", args.zoom);
+    this.map.showControl("Layers", args.layers);
+    this.map.showControl("Legend", args.legend, "open"); 
+}
+
+MakerMap.prototype.addMapTypeControls = function() {
+    // TODO: Add provider code
+}
+
+MakerMap.prototype.dragging = function(on) {
+    // TODO: Add provider code
+}
+
+MakerMap.prototype.setCenterAndZoom = function(point, zoom) { 
+    this.map.setCenterZoom(point.lat, point.lon,zoom);
+}
+
+MakerMap.prototype.getCenter = function() {
+    return this.map.getCenterZoom()[0];
+}
+
+MakerMap.prototype.setCenter = function(point, options) {
+    this.map.setCenter(point.lat, point.lon);            
+}
+
+MakerMap.prototype.setZoom = function(zoom) {
+    this.map.setZoom(zoom);
+}
+
+MakerMap.prototype.getZoom = function() {
+    return this.map.getZoom();
+}
+
+MakerMap.prototype.getZoomLevelForBoundingBox = function( bbox ) {
+    // TODO: Add provider code
+}
+
+MakerMap.prototype.setMapType = function(type) {
+    switch(type) {
+        case 'road':
+          this.map.setMapProvider("OpenStreetMap (road)");
+          break;
+        case 'satellite':
+          this.map.setMapProvider("BlueMarble");
+          break;
+        case 'hybrid':
+          this.map.setMapProvider("Google Hybrid");
+          break;
+        default:
+          this.map.setMapProvider(type);
+    }	 
+}
+
+MakerMap.prototype.getMapType = function() {
+    switch(map.getMapProvider) {
+        case "OpenStreetMap (Road)":
+            retu
+
+    }
+    // TODO: Add provider code
+
+    //return mxn.Mapstraction.ROAD;
+    //return mxn.Mapstraction.SATELLITE;
+    //return mxn.Mapstraction.HYBRID;
+
+}
+
+MakerMap.prototype.getBounds = function() {
+    return this.map.getExtent();
+}
+
+MakerMap.prototype.setBounds = function(bounds){
+    this.map.setExtent(bounds.north, bounds.south, bounds.east, bounds.west);
+    // map.setExtent(51.9,52.25,-4.3,-3.75)
+    //map.setExtent(n,s,e,w);
+}
+
+MakerMap.prototype.addImageOverlay = function(id, src, opacity, west, south, east, north, oContext) {
+    // TODO: Add provider code
+}
+
+MakerMap.prototype.addTileLayer = function(tile_url, opacity, copyright_text, min_zoom, max_zoom) {
+    // TODO: Add provider code
+},
+
+MakerMap.prototype.toggleTileLayer = function(tile_url) {
+    // TODO: Add provider code
+},
+
+MakerMap.prototype.getPixelRatio = function() {
+    // TODO: Add provider code	
+},
+
+MakerMap.prototype.mousePosition = function(element) {
+    // TODO: Add provider code	
+}
+
+MakerMap.prototype.resize_map_to_fit = function() {
+	var windowHeight = document.viewport.getHeight();
+	var margin = 77
+	var mapHeight = Math.max(windowHeight - margin, 600)
+	//alert("mapHeight: " + mapHeight + " windowHeight: " + windowHeight + ", margin: " + margin)
+	f1_swfobject21.getObjectById(FlashMap.dom_id).style.height = mapHeight + "px";
+}
+
+
+// Internal API. Use of these methods is discouraged.
 var FlashMap = {
-  load_map: function(dom_id, map_id) {
-    var options = Object.f1_extend({
-      afterFinish: { }
-    }, arguments[2] || { });
-    
-    FlashMap.dom_id = dom_id;
-    var flashvars  = {map_id:map_id, core_host: Maker.core_host + '/', maker_host: Maker.maker_host + '/', dev:"false"}    
+  load_map: function(dom_id, map_id, callback) {
+    var flashvars  = {map_id:map_id, core_host: Maker.core_host + '/', maker_host: Maker.maker_host + '/', dev:"false", callback:callback}    
     var params     = {base: Maker.maker_host, "allowScriptAccess":"always", "allowNetworking": "all"};
     var attributes = {"allowScriptAccess":"always", "allowNetworking": "all"};
     f1_swfobject21.embedSWF(Maker.maker_host + "/Embed.swf", dom_id, "100%", "710", "9.0.0", Maker.maker_host + "/expressInstall.swf", flashvars, params, attributes)
-    setTimeout(function() { FlashMap.map = f1_swfobject21.getObjectById(FlashMap.dom_id);}, 500);
-    if(typeof options.afterFinish == "function") {options.afterFinish(dom_id, map_id)}
   },
-  
-  resize_when_ready: function() {
-    var t = setTimeout("FlashMap.resize_map_to_fit();", 500); //flash init is a bit slow.
-  },
-  
-	resize_map_to_fit: function() {
-		var windowHeight = document.viewport.getHeight();
-		var margin = 77
-		var mapHeight = Math.max(windowHeight - margin, 600)
-		//alert("mapHeight: " + mapHeight + " windowHeight: " + windowHeight + ", margin: " + margin)
-		f1_swfobject21.getObjectById(FlashMap.dom_id).style.height = mapHeight + "px";
-	},
-	
-	store_map_location: function() {
-    centerZoom = FlashMap.map.getCenterZoom();
-    location.hash = "lat="+centerZoom[0]+"&lon="+centerZoom[1]+"&zoom="+centerZoom[2];
-  },
-  
-  load_map_location: function() {
-    var zooms;
-    if(zooms = location.hash.match(/lat=([-\d\.]+)&lon=([-\d\.]+)&zoom=(\d+)/)) {
-        centerZoom = FlashMap.map.setCenterZoom(zooms[1],zooms[2],zooms[3]);
-    }
-  }, 
   
   jsonp: function(url,callback,query) {
       if (url.indexOf("?") > -1)

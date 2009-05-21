@@ -1,0 +1,67 @@
+body {
+  background: #333;
+}
+
+.panes {
+  clear: both;
+}
+
+#left_map, #right_map {
+  height: 400px;
+  width: 100%;
+  visibility:hidden;
+}
+body {padding: 0; margin: 0;}
+#maker_map {visibility:hidden}
+#header {
+  height: 45px;
+  background: #666;
+  border-bottom: 3px solid #000;
+}
+#header p {
+  float: right;
+  width: 200px;
+  color: #ccc;
+  text-align: right;
+  padding: 8px 10px 0 0;
+}
+#header a:hover {
+  opacity: 1;
+}
+#header h3, #header p {margin: 0;}
+#logo {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: white;
+  font-size: 18px;
+}
+#header .button {
+  float: right;
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 14px;
+  border-right: 1px solid #eee;
+  width: 100px;
+  background-color: orange;
+  opacity: 0.8;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+}
+
+body {
+  font-family: Helvetica, Arial;
+  font-size: small;
+}
+.left {
+  width: 49%;
+  height: 400px;
+  float: left;
+  padding-right: 1%;
+}
+.right {
+  width: 50%;
+  float: left;
+}

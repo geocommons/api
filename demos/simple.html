@@ -46,11 +46,10 @@
         Loading...
       </div>
     </div></div>
-
     <div class="right">
     <h2>Demo Functions</h2>
     <ul>
-      <li><a href="javascript:first_map.setBounds({'north':51.9,'south':-4.3,'east':52.25,'west':-3.75});">Set Bounds</a></li>
+      <li><a href="javascript:first_map.setBounds({'north':38.94,'south':38.84,'east':-76.97,'west':-77.22});">Set Bounds</a></li>
       <li><a href="javascript:b=first_map.getBounds();alert(b.north+','+b.south+','+b.east+','+b.west);">Get Bounds</a> </li>
       <li><a href="javascript:first_map.setZoom( first_map.getZoom()-1 );">Zoom Out</a></li>
       <li><a href="javascript:first_map.setZoom( first_map.getZoom()+1 );">Zoom In</a></li>
@@ -66,11 +65,9 @@
     </div>
     
     <script charset='utf-8' type='text/javascript'>
-      
-      new MakerMap('example_map', 5, {
+      Maker.load_map('example_map', 5, {
           onLoaded: function(map){first_map = map} // ensures that the map exists before we access it.
       })
-      
     </script>
   </body>
 

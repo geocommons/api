@@ -4,36 +4,7 @@
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
     <title>GeoCommons Synchronized Mapping</title>
     <script src="../src/f1_maker_map.js" type="text/javascript"></script>
-
-    <style type="text/css" media="screen">
-     #left_map, #right_map {
-        height: 400px;
-        width: 100%;
-     }
-     body {padding: 0; margin: 0;}
-     #maker_map {visibility:hidden}
-     #header {
-       padding: 15px;
-       background: #ccc;
-       border-bottom: 1px solid #333;
-       text-align: center;
-     }
-     #header h3, #header p {margin: 0;}
-     body {
-       font-family: Helvetica, Arial;
-       font-size: small;
-     }
-     .left {
-      width: 49%;
-      height: 400px;
-      float: left;
-      padding-right: 5px;
-     }
-     .right {
-       width: 49%;
-       float: left;
-     }
-    </style>
+    <link href="example.css" media="all" rel="stylesheet" type="text/css" />
 
     <script type='text/javascript'>
       Maker.maker_host='http://maker.recovery.geocommons.com';
@@ -44,26 +15,34 @@
 
   <body>
     <div id='header'>
-        <h3><a href="javascript:sync()">Syncronize<em>!</em></a></h3>
-        <p>Move the map on the left and click syncronize to match bounds.</p>
+        <div id="logo">Acme Incorporated</div>
+        <a href="javascript:sync()" class="button">Synchronize<em>!</em></a>
+        <p>Move the map on the left and click synchronize to match bounds.</p>
     </div>
+    
+    <div class="panes">
+      <div class="atlas left"><div id='left_map' class='map'>
+        <div class='loading'>
+          Loading...
+        </div>
+      </div></div>
 
-    <div class="atlas left"><div id='left_map' class='map'>
-      <div class='loading'>
-        Loading...
-      </div>
-    </div></div>
-
-    <div class="atlas right"><div id='right_map' class='map'>
-      <div class='loading'>
-        Loading...
-      </div>
-    </div></div>
+      <div class="atlas right"><div id='right_map' class='map'>
+        <div class='loading'>
+          Loading...
+        </div>
+      </div></div>
+    </div>
     
     <script charset='utf-8' type='text/javascript'>
-      
-      new MakerMap('left_map',  6, { onLoaded: function(map) {left_map = map}  })
-      new MakerMap('right_map', 5, { onLoaded: function(map) {right_map = map} })
+      new MakerMap('left_map',  6, { onLoaded: function(map) {
+        left_map = map;  
+        map.set_height_to_fit(100);
+      }})
+      new MakerMap('right_map', 5, { onLoaded: function(map) {
+        right_map = map
+        map.set_height_to_fit(100); 
+      }})
       
       sync = function() {
         right_map.setBounds(left_map.getBounds());

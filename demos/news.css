@@ -87,15 +87,32 @@ h1 small {
 
 /* __________________________( Header ) ___ */
 #header {
-  background: #1a365f;
-  height: 49px;
+  height: 45px;
+  background: #666;
+  border-bottom: 3px solid #000;
 }
-
-#header #logo {
-  font-size: 16px;
-  padding: 13px 0 0 22px;
-  color: #DEE9FD;
+#header p {
+  float: right;
+  width: 200px;
+  color: #ccc;
+  text-align: right;
+  padding: 8px 10px 0 0;
 }
+#header a:hover {
+  opacity: 1;
+}
+#header h3, #header p {margin: 0;}
+#logo {
+  position: absolute;
+  left: 15px;
+  top: 10px;
+  color: white;
+  font-size: 18px;
+}
+#header a:hover {
+  opacity: 1;
+}
+#header h3, #header p {margin: 0;}
 
 /* __________________________( Footer ) ___ */
 #footer {

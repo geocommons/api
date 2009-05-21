@@ -7,7 +7,7 @@ var Maker = {
   
   load_map: function(dom_id, map_id, options) {
     Maker._check_hosts()
-    Maker.map[dom_id] = new MakerMap(dom_id, map_id, arguments[2])
+    new MakerMap(dom_id, map_id, arguments[2])
     return Maker.map[dom_id] 
   },
   
@@ -131,17 +131,7 @@ MakerMap.prototype.setMapType = function(type) {
 }
 
 MakerMap.prototype.getMapType = function() {
-    switch(map.getMapProvider) {
-        case "OpenStreetMap (Road)":
-            retu
-
-    }
     // TODO: Add provider code
-
-    //return mxn.Mapstraction.ROAD;
-    //return mxn.Mapstraction.SATELLITE;
-    //return mxn.Mapstraction.HYBRID;
-
 }
 
 MakerMap.prototype.getBounds = function() {
@@ -150,8 +140,6 @@ MakerMap.prototype.getBounds = function() {
 
 MakerMap.prototype.setBounds = function(bounds){
     this.map.setExtent(bounds.north, bounds.south, bounds.east, bounds.west);
-    // map.setExtent(51.9,52.25,-4.3,-3.75)
-    //map.setExtent(n,s,e,w);
 }
 
 MakerMap.prototype.addImageOverlay = function(id, src, opacity, west, south, east, north, oContext) {
@@ -174,12 +162,15 @@ MakerMap.prototype.mousePosition = function(element) {
     // TODO: Add provider code	
 }
 
-MakerMap.prototype.resize_map_to_fit = function() {
-	var windowHeight = document.viewport.getHeight();
-	var margin = 77
+MakerMap.prototype.set_height_to_fit = function(margin) {
+  var windowHeight = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    windowHeight = window.innerHeight; //Non-IE
+  } else if( document.documentElement && document.documentElement.clientHeight) {
+    windowHeight = document.documentElement.clientHeight; //IE 6+ in 'standards compliant mode'
+  }
 	var mapHeight = Math.max(windowHeight - margin, 600)
-	//alert("mapHeight: " + mapHeight + " windowHeight: " + windowHeight + ", margin: " + margin)
-	f1_swfobject21.getObjectById(FlashMap.dom_id).style.height = mapHeight + "px";
+	f1_swfobject21.getObjectById(this.dom_id).style.height = mapHeight + "px";
 }
 
 

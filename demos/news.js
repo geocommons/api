@@ -39,7 +39,7 @@ var News = {
                             per_page: 8 })
     if(News.default_map_list == element.id) {
       Maker.load_map('maker_map', results[0].pk, {
-        afterFinish : function(){
+        onLoaded : function(){
                             Maker.resize_when_ready()
                             Event.observe(window, 'resize', Maker.resize_map_to_fit) }  })
     }
